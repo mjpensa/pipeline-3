@@ -4,7 +4,7 @@
 
 # 🔄 PIPELINE MODE
 
-This prompt supports automated pipeline execution.
+This prompt requires the `Start Pipeline:` trigger to execute.
 
 **To start the pipeline**: Enter `Start Pipeline:` followed by your research brief. The system will:
 1. Execute this research prompt (Prompt 1)
@@ -15,8 +15,7 @@ This prompt supports automated pipeline execution.
 **Pipeline trigger detection**:
 - If input begins with `Start Pipeline:`, extract everything after as the `RESEARCH_BRIEF` content and execute the research process
 - At completion, display: `[PIPELINE STATUS: Research complete. Say "proceed" to generate executive summary, or "proceed to presentation" to skip to presentation outline.]`
-
-**Standalone mode**: If no pipeline trigger is detected, operate normally with the `RESEARCH_BRIEF` section below.
+- If no `Start Pipeline:` trigger is detected, prompt the user to provide their research brief using the required format
 
 ---
 
@@ -525,34 +524,17 @@ If tools unavailable: State in Section 3.4 → Proceed conservatively → Lower 
 
 # RESEARCH BRIEF
 
-<<<RESEARCH_BRIEF>>>
+The research brief is provided by the user after the `Start Pipeline:` trigger. Extract and parse the user's input to identify:
 
-**Topic**: [Core question]
+- **Topic**: The core research question
+- **Scope**: Time horizon, geographies, inclusions/exclusions
+- **Stakeholders**: Target audience for the research
+- **Sub-Questions**: Specific areas to address (if provided)
+- **Output Preferences**: Depth level, frameworks, priority areas
+- **Constraints**: Any limitations on sources or scope
+- **Context**: Background information (if provided)
 
-**Scope**:
-- Time horizon: [e.g., 2020–2025]
-- Geographies: [e.g., US, EU, UK]
-- In scope: [Topics included]
-- Out of scope: [Exclusions]
-
-**Stakeholders**: [e.g., G-SIBs, payment processors, regulators]
-
-**Sub-Questions** (optional): 
-1. 
-2. 
-3. 
-
-**Output Preferences**:
-- Depth: [Brief / Standard / Comprehensive]
-- Quick reference: [Yes / No]
-- Specific frameworks: [e.g., cross-border comparison, timeline]
-- Priority areas: [Extra depth needed]
-
-**Constraints**: [e.g., exclude APAC, public sources only]
-
-**Context** (optional): [Background]
-
-<<<END_RESEARCH_BRIEF>>>
+If any required elements are unclear or missing from the user's input, ask clarifying questions before proceeding with research.
 
 ---
 
