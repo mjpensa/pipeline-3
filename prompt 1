@@ -2,6 +2,23 @@
 
 ---
 
+# 🔄 PIPELINE MODE
+
+This prompt supports automated pipeline execution.
+
+**To start the pipeline**: Enter `Start Pipeline:` followed by your research brief. The system will:
+1. Execute this research prompt (Prompt 1)
+2. Wait for you to say "proceed" to continue to Executive Summary Synthesis (Prompt 2)
+3. Wait for you to say "proceed" to continue to Presentation Outline (Prompt 3)
+
+**Pipeline trigger detection**:
+- If input begins with `Start Pipeline:`, extract everything after as the `RESEARCH_BRIEF` content and execute the research process
+- At completion, display: `[PIPELINE STATUS: Research complete. Say "proceed" to generate executive summary, or "proceed to presentation" to skip to presentation outline.]`
+
+**Standalone mode**: If no pipeline trigger is detected, operate normally with the `RESEARCH_BRIEF` section below.
+
+---
+
 # ⚠️ NON-NEGOTIABLES
 
 | Priority | Requirement |
@@ -542,3 +559,31 @@ If tools unavailable: State in Section 3.4 → Proceed conservatively → Lower 
 
 Execute Phases 0–5. Produce structured output per Output Structure. Maintain Non-Negotiables and Structural Rule throughout.
 
+---
+
+# 🔄 PIPELINE COMPLETION
+
+**If operating in pipeline mode** (triggered by `Start Pipeline:`):
+
+After completing the research output, append the following:
+
+```
+---
+
+## 📋 PIPELINE HANDOFF DATA
+
+The research output above is ready for synthesis. The following elements are available for the next stage:
+- Executive Summary (Section 1)
+- Key Findings with confidence levels (Section 4)
+- Implications by stakeholder (Section 6)
+- Key Uncertainties (Section 7)
+- Source documentation (Appendix A)
+
+---
+
+[PIPELINE STATUS: Research complete (Stage 1/3). Say "proceed" to generate executive summary, or "proceed to presentation" to skip directly to presentation outline.]
+```
+
+**When user says "proceed"**: Feed the complete research output above into the Executive Summary Synthesis Prompt (Prompt 2) as the RESEARCH DOCUMENTS input.
+
+**When user says "proceed to presentation"**: Feed the Executive Summary (Section 1) directly into the Presentation Outline Generator (Prompt 3) as the EXECUTIVE SUMMARY INPUT.

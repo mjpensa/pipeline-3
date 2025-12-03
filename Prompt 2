@@ -2,6 +2,23 @@
 
 ---
 
+# 🔄 PIPELINE MODE
+
+This prompt is **Stage 2 of 3** in the automated pipeline.
+
+**Pipeline detection**:
+- If the user says "proceed" and provides research output from Prompt 1 (COSTAR Research Template), automatically use that output as the RESEARCH DOCUMENTS input
+- Look for pipeline indicators: structured sections (Executive Summary, Detailed Findings, Appendices A-D), confidence levels, Q-references, or `[PIPELINE STATUS]` markers
+
+**Pipeline behavior**:
+- When receiving pipeline input, skip the "RESEARCH DOCUMENTS" placeholder section and use the provided research output
+- Process through all 7 passes as normal
+- At completion, display pipeline status for proceeding to Prompt 3
+
+**Standalone mode**: If no pipeline input is detected, operate normally with manually provided research documents.
+
+---
+
 # RULES & CONSTRAINTS
 
 | Rule | Description |
@@ -573,3 +590,31 @@ Summary cannot be more confident than source research.
 
 Execute Passes 1–7. Output Executive Summary (or Research Gap Assessment), then Process Notes with pass labels.
 
+---
+
+# 🔄 PIPELINE COMPLETION
+
+**If operating in pipeline mode** (received input from Prompt 1):
+
+After completing the executive summary output, append the following:
+
+```
+---
+
+## 📋 PIPELINE HANDOFF DATA
+
+The executive summary above is ready for presentation development. Key elements for the next stage:
+- Core thesis and governing thought
+- Key findings with source citations
+- Stakeholder implications
+- Branded concepts developed
+- Narrative arc and structure
+
+---
+
+[PIPELINE STATUS: Executive summary complete (Stage 2/3). Say "proceed" to generate presentation outline.]
+```
+
+**When user says "proceed"**: Feed the complete Executive Summary above (excluding Process Notes) into the Presentation Outline Generator (Prompt 3) as the EXECUTIVE SUMMARY INPUT.
+
+**If Research Gap Assessment was produced instead**: Alert the user that insufficient evidence was found and recommend returning to research before proceeding to presentation. Pipeline can still continue if user explicitly confirms.
