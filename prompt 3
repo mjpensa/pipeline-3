@@ -3,6 +3,24 @@
 
 ---
 
+# 🔄 PIPELINE MODE
+
+This prompt is **Stage 3 of 3** (final stage) in the automated pipeline.
+
+**Pipeline detection**:
+- If the user says "proceed" and provides an executive summary from Prompt 2, automatically use that as the EXECUTIVE SUMMARY INPUT
+- Look for pipeline indicators: branded concepts, inline citations `[ShortName, location]`, narrative structure, or `[PIPELINE STATUS]` markers
+- Can also receive input directly from Prompt 1 if user said "proceed to presentation" (will use Section 1 Executive Summary)
+
+**Pipeline behavior**:
+- When receiving pipeline input, skip the "EXECUTIVE SUMMARY INPUT" placeholder section and use the provided summary
+- Process through all 7 passes as normal
+- At completion, display final pipeline completion status
+
+**Standalone mode**: If no pipeline input is detected, operate normally with manually provided executive summary.
+
+---
+
 # RULES & CONSTRAINTS
 
 | Rule | Description |
@@ -589,4 +607,38 @@ List titles in sequence:
 
 Execute Passes 1–7. Output Presentation Outline, Appendix, Headline Sequence, then Process Notes.
 
+---
 
+# 🔄 PIPELINE COMPLETION
+
+**If operating in pipeline mode** (received input from Prompt 1 or Prompt 2):
+
+After completing the presentation outline output, append the following:
+
+```
+---
+
+## ✅ PIPELINE COMPLETE
+
+The full pipeline has been executed:
+
+| Stage | Deliverable | Status |
+|-------|-------------|--------|
+| 1. Research | Comprehensive research report with sourced findings | ✅ Complete |
+| 2. Synthesis | Executive summary with branded concepts | ✅ Complete |
+| 3. Presentation | Tier-1 consulting presentation outline | ✅ Complete |
+
+**Deliverables produced**:
+- Research report (Stage 1) — Full evidence base with appendices
+- Executive summary (Stage 2) — 900-2,000 word synthesis
+- Presentation outline (Stage 3) — Slide-by-slide deck with speaker notes
+
+**Next steps**:
+- Review and refine each deliverable as needed
+- Build presentation slides from the outline
+- Prepare for delivery using speaker notes
+
+[PIPELINE STATUS: Complete. All three stages finished successfully.]
+```
+
+**Pipeline summary**: The user started with a research brief and now has a complete set of consulting deliverables ready for client presentation.
