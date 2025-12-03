@@ -612,9 +612,30 @@ The executive summary above is ready for presentation development. Key elements 
 
 ---
 
+## 📊 RESEARCH DATA EXTRACT (Condensed)
+
+The following **slide-ready data** is extracted for Stage 4. Include ONLY high-impact items:
+
+### Hero Statistics (5-10 max)
+[The most compelling numbers - prioritize stats that could anchor a Data Showcase slide]
+- [Stat]: [Value] — Source: [ShortName, location]
+
+### Key Sources (for citations)
+[Abbreviated source list for slide footnotes]
+- [ShortName]: [Full title, date]
+
+### Quotable Lines (2-3 max)
+[Only quotes strong enough for a Quote Highlight slide]
+- "[Quote]" — [Attribution]
+
+### Critical Dates (if timeline-relevant)
+[Only dates that would appear in a Process/Timeline slide]
+
+---
+
 [PIPELINE STATUS: Executive summary complete (Stage 2/4). Say "proceed" to generate presentation outline.]
 ```
 
-**When user says "proceed"**: Feed the complete Executive Summary above (excluding Process Notes) into the Presentation Outline Generator (Prompt 3) as the EXECUTIVE SUMMARY INPUT.
+**When user says "proceed"**: Feed the complete Executive Summary above AND the Research Data Extract into the Presentation Outline Generator (Prompt 3). The condensed extract provides slide-ready data for Stage 4 without bloating the context.
 
 **If Research Gap Assessment was produced instead**: Alert the user that insufficient evidence was found and recommend returning to research before proceeding to presentation. Pipeline can still continue if user explicitly confirms.
