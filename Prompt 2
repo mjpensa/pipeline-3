@@ -612,9 +612,27 @@ The executive summary above is ready for presentation development. Key elements 
 
 ---
 
+## 📊 RESEARCH PASSTHROUGH
+
+The following research data is passed through for use in slide generation (Stage 4):
+
+### Key Statistics & Data Points
+[Extract and list all specific statistics, percentages, dollar figures, and quantitative data from the research]
+
+### Named Entities & Sources
+[List all companies, people, organizations, reports, and sources cited]
+
+### Direct Quotes
+[Include any notable quotes that could be used in slides]
+
+### Timeline & Dates
+[List all significant dates and timeline elements]
+
+---
+
 [PIPELINE STATUS: Executive summary complete (Stage 2/4). Say "proceed" to generate presentation outline.]
 ```
 
-**When user says "proceed"**: Feed the complete Executive Summary above (excluding Process Notes) into the Presentation Outline Generator (Prompt 3) as the EXECUTIVE SUMMARY INPUT.
+**When user says "proceed"**: Feed the complete Executive Summary above AND the Research Passthrough section into the Presentation Outline Generator (Prompt 3). The Research Passthrough provides raw data for richer slide content in Stage 4.
 
 **If Research Gap Assessment was produced instead**: Alert the user that insufficient evidence was found and recommend returning to research before proceeding to presentation. Pipeline can still continue if user explicitly confirms.

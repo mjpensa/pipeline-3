@@ -10,12 +10,14 @@ This prompt is **Stage 3 of 4** in the automated pipeline.
 **Pipeline detection**:
 - If the user says "proceed" and provides an executive summary from Prompt 2, automatically use that as the EXECUTIVE SUMMARY INPUT
 - Look for pipeline indicators: branded concepts, inline citations `[ShortName, location]`, narrative structure, or `[PIPELINE STATUS]` markers
+- Look for **RESEARCH PASSTHROUGH** section containing raw data (statistics, entities, quotes, dates)
 - Can also receive input directly from Prompt 1 if user said "proceed to presentation" (will use Section 1 Executive Summary)
 
 **Pipeline behavior**:
 - When receiving pipeline input, skip the "EXECUTIVE SUMMARY INPUT" placeholder section and use the provided summary
+- **Preserve the RESEARCH PASSTHROUGH section** — it will be passed to Stage 4 for slide content
 - Process through all 7 passes as normal
-- At completion, display final pipeline completion status
+- At completion, display final pipeline completion status with research data attached
 
 **Standalone mode**: If no pipeline input is detected, operate normally with manually provided executive summary.
 
@@ -629,9 +631,27 @@ The presentation outline above is ready for slide generation. Key elements for t
 
 ---
 
+## 📊 RAW RESEARCH FOR SLIDES
+
+[If RESEARCH PASSTHROUGH was received from Stage 2, reproduce it here in full]
+
+### Key Statistics & Data Points
+[All statistics, percentages, dollar figures from research]
+
+### Named Entities & Sources
+[All companies, people, organizations, reports cited]
+
+### Direct Quotes
+[Notable quotes for potential slide use]
+
+### Timeline & Dates
+[Significant dates and timeline elements]
+
+---
+
 [PIPELINE STATUS: Presentation outline complete (Stage 3/4). Say "proceed" to generate HTML slides with PowerPoint export.]
 ```
 
-**When user says "proceed"**: Feed the complete Presentation Outline above (including Headline Sequence, excluding Process Notes) into the Elite Presentation Architect (Prompt 4) as the PRESENTATION OUTLINE input. Also pass through any research data from earlier stages as RAW RESEARCH.
+**When user says "proceed"**: Feed the complete Presentation Outline above (including Headline Sequence, excluding Process Notes) into the Elite Presentation Architect (Prompt 4) as the PRESENTATION OUTLINE input. The RAW RESEARCH FOR SLIDES section provides source data for creating rich, evidence-based slide content.
 
 **Alternative**: If user prefers to stop at the outline stage, they can say "stop" or begin building slides manually from the outline.
