@@ -612,27 +612,30 @@ The executive summary above is ready for presentation development. Key elements 
 
 ---
 
-## 📊 RESEARCH PASSTHROUGH
+## 📊 RESEARCH DATA EXTRACT (Condensed)
 
-The following research data is passed through for use in slide generation (Stage 4):
+The following **slide-ready data** is extracted for Stage 4. Include ONLY high-impact items:
 
-### Key Statistics & Data Points
-[Extract and list all specific statistics, percentages, dollar figures, and quantitative data from the research]
+### Hero Statistics (5-10 max)
+[The most compelling numbers - prioritize stats that could anchor a Data Showcase slide]
+- [Stat]: [Value] — Source: [ShortName, location]
 
-### Named Entities & Sources
-[List all companies, people, organizations, reports, and sources cited]
+### Key Sources (for citations)
+[Abbreviated source list for slide footnotes]
+- [ShortName]: [Full title, date]
 
-### Direct Quotes
-[Include any notable quotes that could be used in slides]
+### Quotable Lines (2-3 max)
+[Only quotes strong enough for a Quote Highlight slide]
+- "[Quote]" — [Attribution]
 
-### Timeline & Dates
-[List all significant dates and timeline elements]
+### Critical Dates (if timeline-relevant)
+[Only dates that would appear in a Process/Timeline slide]
 
 ---
 
 [PIPELINE STATUS: Executive summary complete (Stage 2/4). Say "proceed" to generate presentation outline.]
 ```
 
-**When user says "proceed"**: Feed the complete Executive Summary above AND the Research Passthrough section into the Presentation Outline Generator (Prompt 3). The Research Passthrough provides raw data for richer slide content in Stage 4.
+**When user says "proceed"**: Feed the complete Executive Summary above AND the Research Data Extract into the Presentation Outline Generator (Prompt 3). The condensed extract provides slide-ready data for Stage 4 without bloating the context.
 
 **If Research Gap Assessment was produced instead**: Alert the user that insufficient evidence was found and recommend returning to research before proceeding to presentation. Pipeline can still continue if user explicitly confirms.
