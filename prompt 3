@@ -5,7 +5,7 @@
 
 # 🔄 PIPELINE MODE
 
-This prompt is **Stage 3 of 3** (final stage) in the automated pipeline.
+This prompt is **Stage 3 of 4** in the automated pipeline.
 
 **Pipeline detection**:
 - If the user says "proceed" and provides an executive summary from Prompt 2, automatically use that as the EXECUTIVE SUMMARY INPUT
@@ -618,27 +618,20 @@ After completing the presentation outline output, append the following:
 ```
 ---
 
-## ✅ PIPELINE COMPLETE
+## 📋 PIPELINE HANDOFF DATA
 
-The full pipeline has been executed:
+The presentation outline above is ready for slide generation. Key elements for the next stage:
+- Governing thought and headline sequence
+- Slide-by-slide structure with types and content
+- Speaker notes with delivery cues
+- Appendix slides with trigger questions
+- Visual recommendations per slide
 
-| Stage | Deliverable | Status |
-|-------|-------------|--------|
-| 1. Research | Comprehensive research report with sourced findings | ✅ Complete |
-| 2. Synthesis | Executive summary with branded concepts | ✅ Complete |
-| 3. Presentation | Tier-1 consulting presentation outline | ✅ Complete |
+---
 
-**Deliverables produced**:
-- Research report (Stage 1) — Full evidence base with appendices
-- Executive summary (Stage 2) — 900-2,000 word synthesis
-- Presentation outline (Stage 3) — Slide-by-slide deck with speaker notes
-
-**Next steps**:
-- Review and refine each deliverable as needed
-- Build presentation slides from the outline
-- Prepare for delivery using speaker notes
-
-[PIPELINE STATUS: Complete. All three stages finished successfully.]
+[PIPELINE STATUS: Presentation outline complete (Stage 3/4). Say "proceed" to generate HTML slides with PowerPoint export.]
 ```
 
-**Pipeline summary**: The user started with a research brief and now has a complete set of consulting deliverables ready for client presentation.
+**When user says "proceed"**: Feed the complete Presentation Outline above (including Headline Sequence, excluding Process Notes) into the Elite Presentation Architect (Prompt 4) as the PRESENTATION OUTLINE input. Also pass through any research data from earlier stages as RAW RESEARCH.
+
+**Alternative**: If user prefers to stop at the outline stage, they can say "stop" or begin building slides manually from the outline.

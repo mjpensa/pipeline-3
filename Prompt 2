@@ -4,7 +4,7 @@
 
 # 🔄 PIPELINE MODE
 
-This prompt is **Stage 2 of 3** in the automated pipeline.
+This prompt is **Stage 2 of 4** in the automated pipeline.
 
 **Pipeline detection**:
 - If the user says "proceed" and provides research output from Prompt 1 (COSTAR Research Template), automatically use that output as the RESEARCH DOCUMENTS input
@@ -612,7 +612,7 @@ The executive summary above is ready for presentation development. Key elements 
 
 ---
 
-[PIPELINE STATUS: Executive summary complete (Stage 2/3). Say "proceed" to generate presentation outline.]
+[PIPELINE STATUS: Executive summary complete (Stage 2/4). Say "proceed" to generate presentation outline.]
 ```
 
 **When user says "proceed"**: Feed the complete Executive Summary above (excluding Process Notes) into the Presentation Outline Generator (Prompt 3) as the EXECUTIVE SUMMARY INPUT.

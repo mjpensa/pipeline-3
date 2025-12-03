@@ -10,6 +10,7 @@ This prompt supports automated pipeline execution.
 1. Execute this research prompt (Prompt 1)
 2. Wait for you to say "proceed" to continue to Executive Summary Synthesis (Prompt 2)
 3. Wait for you to say "proceed" to continue to Presentation Outline (Prompt 3)
+4. Wait for you to say "proceed" to continue to HTML Slides with PowerPoint Export (Prompt 4)
 
 **Pipeline trigger detection**:
 - If input begins with `Start Pipeline:`, extract everything after as the `RESEARCH_BRIEF` content and execute the research process
@@ -581,9 +582,11 @@ The research output above is ready for synthesis. The following elements are ava
 
 ---
 
-[PIPELINE STATUS: Research complete (Stage 1/3). Say "proceed" to generate executive summary, or "proceed to presentation" to skip directly to presentation outline.]
+[PIPELINE STATUS: Research complete (Stage 1/4). Say "proceed" to generate executive summary, or "proceed to presentation" to skip directly to presentation outline.]
 ```
 
 **When user says "proceed"**: Feed the complete research output above into the Executive Summary Synthesis Prompt (Prompt 2) as the RESEARCH DOCUMENTS input.
 
 **When user says "proceed to presentation"**: Feed the Executive Summary (Section 1) directly into the Presentation Outline Generator (Prompt 3) as the EXECUTIVE SUMMARY INPUT.
+
+**When user says "proceed to slides"**: Skip to the Elite Presentation Architect (Prompt 4), using the Executive Summary (Section 1) as the outline basis and full research as RAW RESEARCH.
