@@ -694,6 +694,8 @@ Execute these passes sequentially:
                          HTML OUTPUT SPECIFICATION
 ═══════════════════════════════════════════════════════════════════════════════
 
+**CRITICAL**: Generate slides as STATIC HTML. All slide content must render immediately when the file opens—NO loading states, NO JavaScript-dependent rendering for the preview. JavaScript is ONLY for the PowerPoint export button.
+
 Generate a single HTML file with this structure:
 ```html
 <!DOCTYPE html>
@@ -703,11 +705,9 @@ Generate a single HTML file with this structure:
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>[PRESENTATION TITLE]</title>
 
-    <!-- PptxGenJS CDN -->
-    <script src="https://cdn.jsdelivr.net/gh/gitbrent/PptxGenJS@3.12.0/dist/pptxgen.bundle.js"></script>
-
-    <!-- Google Fonts -->
+    <!-- Google Fonts - load first for immediate rendering -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
@@ -722,7 +722,7 @@ Generate a single HTML file with this structure:
             --color-neutral: #718096;
             --color-background: #ffffff;
             --color-surface: #f7fafc;
-            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             --slide-width: 960px;
             --slide-height: 540px;
             --slide-padding: 48px;
@@ -747,6 +747,8 @@ Generate a single HTML file with this structure:
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
         }
 
         .header h1 {
@@ -771,6 +773,7 @@ Generate a single HTML file with this structure:
         }
 
         .download-btn:hover { background: var(--color-secondary); }
+        .download-btn:disabled { background: #a0aec0; cursor: not-allowed; }
 
         /* ══════════════════════════════════════════════════════════════════
            SLIDE CONTAINER
@@ -784,7 +787,7 @@ Generate a single HTML file with this structure:
 
         .slide {
             width: var(--slide-width);
-            height: var(--slide-height);
+            min-height: var(--slide-height);
             background: var(--color-background);
             border-radius: 4px;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
@@ -826,14 +829,158 @@ Generate a single HTML file with this structure:
             line-height: 1.6;
         }
 
-        /* [Additional template-specific styles...] */
+        .slide-body ul {
+            margin-left: 24px;
+            margin-top: 12px;
+        }
 
+        .slide-body li {
+            margin-bottom: 8px;
+        }
+
+        /* ══════════════════════════════════════════════════════════════════
+           SLIDE TEMPLATES
+           ══════════════════════════════════════════════════════════════════ */
+
+        /* Title Slide */
+        .slide-title-template {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .slide-title-template .main-title {
+            font-size: 42px;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 16px;
+        }
+
+        .slide-title-template .subtitle {
+            font-size: 20px;
+            color: var(--color-neutral);
+        }
+
+        /* Section Divider */
+        .slide-section-divider {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .slide-section-divider .section-number {
+            font-size: 64px;
+            font-weight: 700;
+            color: var(--color-surface);
+            -webkit-text-stroke: 2px var(--color-primary);
+            margin-bottom: 16px;
+        }
+
+        .slide-section-divider .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        /* Two Column Layout */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            margin-top: 16px;
+        }
+
+        /* Three Column Layout */
+        .three-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 24px;
+            margin-top: 16px;
+        }
+
+        /* Data Card */
+        .data-card {
+            background: var(--color-surface);
+            padding: 24px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .data-card .metric {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        .data-card .metric.positive { color: var(--color-accent); }
+        .data-card .metric.negative { color: var(--color-alert); }
+
+        .data-card .label {
+            font-size: 14px;
+            color: var(--color-neutral);
+            margin-top: 8px;
+        }
+
+        /* Key Takeaways */
+        .takeaway-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .takeaway-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--color-surface);
+        }
+
+        .takeaway-list li:last-child {
+            border-bottom: none;
+        }
+
+        .takeaway-number {
+            background: var(--color-primary);
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        /* Source footnote */
+        .source-footnote {
+            position: absolute;
+            bottom: 16px;
+            left: var(--slide-padding);
+            font-size: 10px;
+            color: var(--color-neutral);
+        }
+
+        /* Print styles */
+        @media print {
+            body { background: white; padding: 0; }
+            .header { display: none; }
+            .slide {
+                box-shadow: none;
+                page-break-after: always;
+                margin: 0;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="header">
         <h1>[Presentation Title] — Preview</h1>
-        <button class="download-btn" onclick="generatePPTX()">
+        <button class="download-btn" onclick="generatePPTX()" id="downloadBtn">
             <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                 <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
                 <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
@@ -843,124 +990,171 @@ Generate a single HTML file with this structure:
     </div>
 
     <div class="slides-container">
-        <!-- SLIDE 1: Title Slide -->
+
+        <!-- ═══════════════════════════════════════════════════════════════
+             SLIDE 1: Title Slide
+             ═══════════════════════════════════════════════════════════════ -->
         <div class="slide slide-title-template">
-            <!-- Slide content here -->
+            <div class="main-title">[Main Presentation Title]</div>
+            <div class="subtitle">[Subtitle or Date] · [Author/Company]</div>
             <span class="slide-number">1</span>
         </div>
 
-        <!-- Additional slides... -->
+        <!-- ═══════════════════════════════════════════════════════════════
+             SLIDE 2: Example Content Slide (replace with actual content)
+             ═══════════════════════════════════════════════════════════════ -->
+        <div class="slide">
+            <div class="slide-title">[Assertion-Based Headline That States a Conclusion]</div>
+            <div class="slide-body">
+                <ul>
+                    <li><strong>Key point one</strong> — Supporting detail with specific data</li>
+                    <li><strong>Key point two</strong> — Supporting detail with specific data</li>
+                    <li><strong>Key point three</strong> — Supporting detail with specific data</li>
+                </ul>
+            </div>
+            <div class="source-footnote">Source: [Citation]</div>
+            <span class="slide-number">2</span>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════════════════════
+             ADD MORE SLIDES HERE - Each as a static HTML block
+             ═══════════════════════════════════════════════════════════════ -->
+
     </div>
+
+    <!-- PptxGenJS - loaded at end, only needed for export -->
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/PptxGenJS@3.12.0/dist/pptxgen.bundle.js"></script>
 
     <script>
         function generatePPTX() {
-            const pptx = new PptxGenJS();
+            const btn = document.getElementById('downloadBtn');
+            btn.disabled = true;
+            btn.innerHTML = 'Generating...';
 
-            // ═══════════════════════════════════════════════════════════════
-            // PRESENTATION SETTINGS
-            // ═══════════════════════════════════════════════════════════════
-            pptx.layout = 'LAYOUT_WIDE'; // 13.33" × 7.5" (16:9)
-            pptx.author = '[Author]';
-            pptx.title = '[Presentation Title]';
-            pptx.subject = '[Subject]';
+            try {
+                const pptx = new PptxGenJS();
 
-            // ═══════════════════════════════════════════════════════════════
-            // MASTER SLIDE DEFINITION
-            // ═══════════════════════════════════════════════════════════════
-            pptx.defineSlideMaster({
-                title: 'MASTER_SLIDE',
-                background: { color: 'FFFFFF' },
-                objects: [
-                    // Slide number (bottom right)
-                    { placeholder: {
-                        options: {
-                            name: 'slideNumber',
-                            type: 'slideNumber',
-                            x: 12.5, y: 7.0, w: 0.6, h: 0.3,
-                            fontSize: 10,
-                            fontFace: 'Calibri',
-                            color: '718096'
-                        },
-                        text: ''
-                    }}
-                ]
-            });
+                // ═══════════════════════════════════════════════════════════════
+                // PRESENTATION SETTINGS
+                // ═══════════════════════════════════════════════════════════════
+                pptx.layout = 'LAYOUT_WIDE'; // 13.33" × 7.5" (16:9)
+                pptx.author = '[Author]';
+                pptx.title = '[Presentation Title]';
+                pptx.subject = '[Subject]';
 
-            // ═══════════════════════════════════════════════════════════════
-            // ⚠️ CRITICAL: USE SYSTEM FONTS ONLY
-            // ═══════════════════════════════════════════════════════════════
-            // DO NOT use 'Inter' - it's not installed on most systems!
-            // USE: 'Calibri', 'Calibri Light', 'Arial', or 'Segoe UI'
+                // ═══════════════════════════════════════════════════════════════
+                // MASTER SLIDE DEFINITION
+                // ═══════════════════════════════════════════════════════════════
+                pptx.defineSlideMaster({
+                    title: 'MASTER_SLIDE',
+                    background: { color: 'FFFFFF' },
+                    objects: [
+                        // Slide number (bottom right)
+                        { placeholder: {
+                            options: {
+                                name: 'slideNumber',
+                                type: 'slideNumber',
+                                x: 12.5, y: 7.0, w: 0.6, h: 0.3,
+                                fontSize: 10,
+                                fontFace: 'Calibri',
+                                color: '718096'
+                            },
+                            text: ''
+                        }}
+                    ]
+                });
 
-            // ═══════════════════════════════════════════════════════════════
-            // ⚠️ CRITICAL: USE EXPLICIT INCH COORDINATES
-            // ═══════════════════════════════════════════════════════════════
-            // DO NOT use percentages like '90%' - they don't work reliably!
-            // ALWAYS specify x, y, w, h in inches (numbers, not strings)
-            //
-            // Standard positioning reference:
-            // • Full width content: x: 0.5, w: 12.33 (with 0.5" margins)
-            // • Left column (60%):  x: 0.5, w: 7.1
-            // • Right column (40%): x: 7.85, w: 4.98
-            // • Three equal cols:   w: 3.78 each, gaps at x: 0.5, 4.53, 8.56
-            // • Headlines:          y: 0.4, h: 0.8
-            // • Content start:      y: 1.4 or 1.5
-            // • Footer/source:      y: 6.9
+                // ═══════════════════════════════════════════════════════════════
+                // ⚠️ CRITICAL: USE SYSTEM FONTS ONLY
+                // ═══════════════════════════════════════════════════════════════
+                // DO NOT use 'Inter' - it's not installed on most systems!
+                // USE: 'Calibri', 'Calibri Light', 'Arial', or 'Segoe UI'
 
-            // ═══════════════════════════════════════════════════════════════
-            // SLIDE GENERATION - USE TEMPLATES FROM PROMPT
-            // ═══════════════════════════════════════════════════════════════
+                // ═══════════════════════════════════════════════════════════════
+                // ⚠️ CRITICAL: USE EXPLICIT INCH COORDINATES
+                // ═══════════════════════════════════════════════════════════════
+                // DO NOT use percentages like '90%' - they don't work reliably!
+                // ALWAYS specify x, y, w, h in inches (numbers, not strings)
+                //
+                // Standard positioning reference:
+                // • Full width content: x: 0.5, w: 12.33 (with 0.5" margins)
+                // • Left column (60%):  x: 0.5, w: 7.1
+                // • Right column (40%): x: 7.85, w: 4.98
+                // • Three equal cols:   w: 3.78 each, gaps at x: 0.5, 4.53, 8.56
+                // • Headlines:          y: 0.4, h: 0.8
+                // • Content start:      y: 1.4 or 1.5
+                // • Footer/source:      y: 6.9
 
-            // SLIDE 1: Title Slide
-            let slide1 = pptx.addSlide({ masterName: 'MASTER_SLIDE' });
-            slide1.addText('[MAIN TITLE]', {
-                x: 0.5, y: 2.8, w: 12.33, h: 1.2,
-                fontSize: 44, fontFace: 'Calibri Light', bold: true,
-                color: '1a365d', align: 'center', valign: 'middle'
-            });
-            slide1.addText('[Subtitle / Date]', {
-                x: 0.5, y: 4.2, w: 12.33, h: 0.5,
-                fontSize: 20, fontFace: 'Calibri',
-                color: '718096', align: 'center'
-            });
+                // ═══════════════════════════════════════════════════════════════
+                // SLIDE GENERATION - USE TEMPLATES FROM PROMPT
+                // ═══════════════════════════════════════════════════════════════
 
-            // SLIDE 2: Example Assertion-Evidence Slide
-            let slide2 = pptx.addSlide({ masterName: 'MASTER_SLIDE' });
-            // Headline (assertion)
-            slide2.addText('[Assertion headline that states a conclusion]', {
-                x: 0.5, y: 0.4, w: 12.33, h: 0.8,
-                fontSize: 24, fontFace: 'Calibri', bold: true,
-                color: '1a365d', valign: 'top'
-            });
-            // Bullet points
-            slide2.addText([
-                { text: 'First key point with evidence', options: { bullet: true, indentLevel: 0 } },
-                { text: 'Second key point with data', options: { bullet: true, indentLevel: 0 } },
-                { text: 'Supporting detail', options: { bullet: true, indentLevel: 1 } },
-                { text: 'Third key point with insight', options: { bullet: true, indentLevel: 0 } }
-            ], {
-                x: 0.5, y: 1.4, w: 12.33, h: 5.0,
-                fontSize: 18, fontFace: 'Calibri', color: '4a5568',
-                valign: 'top', paraSpaceAfter: 8
-            });
-            // Source citation
-            slide2.addText('Source: [Citation]', {
-                x: 0.5, y: 6.9, w: 10, h: 0.3,
-                fontSize: 10, fontFace: 'Calibri', color: '718096', italic: true
-            });
+                // SLIDE 1: Title Slide
+                let slide1 = pptx.addSlide({ masterName: 'MASTER_SLIDE' });
+                slide1.addText('[MAIN TITLE]', {
+                    x: 0.5, y: 2.8, w: 12.33, h: 1.2,
+                    fontSize: 44, fontFace: 'Calibri Light', bold: true,
+                    color: '1a365d', align: 'center', valign: 'middle'
+                });
+                slide1.addText('[Subtitle / Date]', {
+                    x: 0.5, y: 4.2, w: 12.33, h: 0.5,
+                    fontSize: 20, fontFace: 'Calibri',
+                    color: '718096', align: 'center'
+                });
 
-            // [Continue with additional slides using templates above...]
-            // Reference: PPTXGENJS TEMPLATE COORDINATES section for each slide type
+                // SLIDE 2: Example Assertion-Evidence Slide
+                let slide2 = pptx.addSlide({ masterName: 'MASTER_SLIDE' });
+                // Headline (assertion)
+                slide2.addText('[Assertion headline that states a conclusion]', {
+                    x: 0.5, y: 0.4, w: 12.33, h: 0.8,
+                    fontSize: 24, fontFace: 'Calibri', bold: true,
+                    color: '1a365d', valign: 'top'
+                });
+                // Bullet points
+                slide2.addText([
+                    { text: 'First key point with evidence', options: { bullet: true, indentLevel: 0 } },
+                    { text: 'Second key point with data', options: { bullet: true, indentLevel: 0 } },
+                    { text: 'Supporting detail', options: { bullet: true, indentLevel: 1 } },
+                    { text: 'Third key point with insight', options: { bullet: true, indentLevel: 0 } }
+                ], {
+                    x: 0.5, y: 1.4, w: 12.33, h: 5.0,
+                    fontSize: 18, fontFace: 'Calibri', color: '4a5568',
+                    valign: 'top', paraSpaceAfter: 8
+                });
+                // Source citation
+                slide2.addText('Source: [Citation]', {
+                    x: 0.5, y: 6.9, w: 10, h: 0.3,
+                    fontSize: 10, fontFace: 'Calibri', color: '718096', italic: true
+                });
 
-            // ═══════════════════════════════════════════════════════════════
-            // EXPORT
-            // ═══════════════════════════════════════════════════════════════
-            pptx.writeFile({ fileName: '[filename].pptx' });
+                // ═══════════════════════════════════════════════════════════════
+                // ADD MORE SLIDES - Mirror the HTML structure above
+                // ═══════════════════════════════════════════════════════════════
+
+                // Export
+                pptx.writeFile({ fileName: '[Presentation-Title].pptx' })
+                    .then(() => {
+                        btn.disabled = false;
+                        btn.innerHTML = '<svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/></svg> Download PowerPoint';
+                    });
+
+            } catch (error) {
+                console.error('Error generating PPTX:', error);
+                btn.disabled = false;
+                btn.innerHTML = 'Error - Try Again';
+            }
         }
     </script>
 </body>
 </html>
 ```
+
+**IMPORTANT GENERATION RULES**:
+1. **NO LOADING STATES** — Slides must render immediately as static HTML
+2. **ALL CONTENT IN HTML** — Every slide's content is written directly in the HTML, not generated by JavaScript
+3. **JAVASCRIPT ONLY FOR EXPORT** — The `<script>` section is solely for PowerPoint generation when the button is clicked
+4. **MIRROR STRUCTURE** — The PptxGenJS code must create slides that match the HTML preview exactly
+5. **LOAD PPTXGENJS LAST** — Place the CDN script at the end of body so it doesn't block rendering
 
 ═══════════════════════════════════════════════════════════════════════════════
                             INPUT TEMPLATE
