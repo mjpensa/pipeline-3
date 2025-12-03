@@ -2,6 +2,10 @@
 
 ---
 
+> **⚠️ CRITICAL INSTRUCTION**: Everything in this prompt (from here to "BEGIN RESEARCH") contains **instructions and templates only**. Do NOT output any of this content in your response. Your response should contain ONLY the research output following the OUTPUT STRUCTURE format, starting with "## 0. Quick Reference" (if requested) or "## 1. Executive Summary".
+
+---
+
 # 🔄 PIPELINE MODE
 
 This prompt requires the `Start Pipeline:` trigger to execute.
@@ -540,7 +544,7 @@ If any required elements are unclear or missing from the user's input, ask clari
 
 # BEGIN RESEARCH
 
-Execute Phases 0–5. Produce structured output per Output Structure. Maintain Non-Negotiables and Structural Rule throughout.
+> **OUTPUT STARTS HERE**: Your response begins now. Do NOT include any content from above this line. Execute Phases 0–5 and produce your research output following the OUTPUT STRUCTURE format. Start directly with "## 0. Quick Reference" (if requested) or "## 1. Executive Summary".
 
 ---
 
